@@ -11,13 +11,9 @@ Frontend kommt noch.
 Es besteht aus drei klar getrennten Ebenen:
 
 HTTP (Client)
-
 ↓
-
 Express (Node.js Backend)
-
 ↓
-
 MySQL Datenbank
 
 
