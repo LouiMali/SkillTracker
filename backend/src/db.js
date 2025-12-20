@@ -13,7 +13,7 @@ const pool = mysql.createPool({
     database: process.env.DB_NAME,
 
     // Defaults
-    waitForConnection: true,
+    waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
 })
@@ -30,8 +30,8 @@ async function testConnection() {
     }
 }
 
-// Test direkt beim start durchführen
+// Testet Verbindung
 testConnection();
 
-// Exportieren vom Pool für spätere Queries
+// Initialisiert DB und exportiert Pool für spätere Queries
 module.exports = pool;
