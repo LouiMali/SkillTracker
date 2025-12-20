@@ -8,3 +8,5 @@ Webapp, um Skills zu verwalten und Lernfortschritte anzuzeigen.
 - DB: MySQL
 
 ## Setup (kommt später)
+
+Test: Credential caching
