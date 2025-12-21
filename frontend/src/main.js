@@ -24,7 +24,10 @@ function el(tag, attrs = {}, children = []) {
     }
   }
 
-  for (const child of children) node.append(child);
+  for (const child of children) {
+    if (child === null || child === undefined) continue;
+    node.append(child);
+  }
 
   return node;
 }
@@ -63,7 +66,7 @@ function render() {
   const info = el("p", { class: "muted" }, ["API: ", el("code", {}, [API_URL])]);
 
   // OUTPUT-Feld (hat in deiner Version gefehlt)
-  const out = el("pre", { class: "out" }, ["Klicke einen Button zum Testen."]);
+  const out = el("div", { class: "out" }, ["Klicke einen Button zum Testen."]);
 
   const btnHealth = el(
     "button",
@@ -87,8 +90,35 @@ function render() {
       onClick: async () => {
         out.textContent = "Lade /skills ...";
         try {
-          const data = await fetchJSON("/skills");
-          out.textContent = JSON.stringify(data, null, 2);
+          const skills = await fetchJSON("/skills");
+
+          if (!Array.isArray(skills) || skills.length === 0) {
+            out.textContent = "Keine Skills vorhanden.";
+            return;
+          }
+
+          // Ausgabe als strukturierte Liste
+          out.textContent = "";
+          const ul = el("ul");
+
+          for (const s of skills) {
+            const li = el("li", {}, [
+              el("div", { class: "skill" }, [
+                el("strong", {}, [s.name]),
+                " ",
+                el("span", { class: "muted" }, [`(${s.category})`]),
+                el("div", {}, [`Level: ${s.current_level} -> ${s.target_level} | Prio: ${s.priority}`]),
+                s.note ? el("div", { class: "muted" }, [s.note]) : null,
+              ]),
+            ]);
+            
+            ul.append(li);
+          }
+
+          out.append(ul);
+
+
+
         } catch (e) {
           out.textContent = String(e.message || e);
         }

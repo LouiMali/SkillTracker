@@ -16,6 +16,19 @@ const PORT = process.env.PORT || 3000;
 // Für Anfragen mit JSON im Body
 app.use(express.json());
 
+// CORS: erlaubt dem Frontend (Vite) Requests an diese API zu schicken
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5173");
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+  // Preflight Requests direkt beantworten
+  if (req.method === "OPTIONS") return res.sendStatus(204);
+
+  next();
+});
+
+
 // Route reagiert auf HTTP GET Anfragen an /health.
 // Testet, ob der Server läuft
 app.get("/health", (req, res) => {
