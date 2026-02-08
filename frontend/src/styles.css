@@ -40,7 +40,7 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
-  padding-bottom: calc(var(--bottom-nav-h) + var(--safe-bottom));
+  padding-bottom: 1rem;
 }
 
 /* === App Header === */
@@ -358,7 +358,7 @@ body {
 /* === FAB (Floating Action Button) === */
 .fab {
   position: fixed;
-  bottom: calc(var(--bottom-nav-h) + var(--safe-bottom) + 16px);
+  bottom: 1.5rem;
   right: 1rem;
   z-index: 90;
   width: 56px;
